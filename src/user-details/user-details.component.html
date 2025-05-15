@@ -1,0 +1,53 @@
+<div class="page">
+  <header>
+    <img class="logo" src="./assets/img/logo2.png" alt="error">
+    <nav>
+      <a class="mat-flat-button mat-warn" routerLink="/userList">Anuluj</a>
+    </nav>
+  </header>
+  <main>
+    <div class="full_panel">
+      <div class="user-box">
+        <div class="row">
+          <div class="column user-left">
+            <img class="user-image" src="./assets/img/student-hat-svgrepo-com.svg" alt="user-image">
+
+            <div class="grades">
+              <p>Średnia ocena studia: <span class="grade">{{ avgGrade | number: "1.2-2" }}</span></p>
+            </div>
+          </div>
+          <div class="column user-right">
+            <p class="student-name">{{ progressRecord.student.name }}</p>
+            <p><span class="label">Numer albumu:</span> {{ progressRecord.student.albumNum }}</p>
+            <p><span class="label">Data urodzenia:</span> {{ progressRecord.student.birthDate | date: "d.MM.y" }}</p>
+            <p><span class="label">Kierunek:</span> {{ progressRecord.student.course }}</p>
+            <p><span class="label">Specjalność:</span> {{ progressRecord.student.specialty }}</p>
+            <p><span class="label">Rok:</span> {{ progressRecord.academicYear }}</p>
+            <p><span class="label">Temat pracy:</span> {{ progressRecord.thesis.subject }}</p>
+          </div>
+        </div>
+
+
+        <div class="row diploma">
+          <a class="diploma-process-button" mat-button [disabled]="!areQuestionsExist()"
+                  routerLink="/userExamination/{{ progressRecord.student.albumNum }}">
+            Proces dyplomowy
+          </a>
+          <div *ngIf="!areQuestionsExist()">Najpierw zaimportuj pytania!</div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+
+
+
+
+
+
+
+
