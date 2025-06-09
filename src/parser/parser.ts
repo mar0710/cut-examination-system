@@ -18,6 +18,7 @@ export class ExcelReader {
   }
 
   public getProgressRecord(): IProgressRecord {
+    console.log('getProgressRecord called');
     const dateYearRow = this.rows[0];
     const dateYear = dateYearRow.match(
       /Data: (([0-2]\d|3[0-1])-(0\d|1[0-2])-(\d{4})) r\.\s+Rok Ak.: (\d{4}\/\d{2})/
@@ -115,7 +116,6 @@ export class ExcelReader {
         } else if (
           (semFinishMatch = semFinishRow.match(/Semestr zaliczono dnia: (.+)/))
         ) {
-          semFinishDate = semFinishMatch[1].trim();
         }
         i++;
 
@@ -148,10 +148,9 @@ export class ExcelReader {
         const avgEctsMatch = this.rows[i].match(avgEctsRe);
         let avgGradeStr = avgEctsMatch[1];
         let avgGrade: number | string = avgGradeStr;
-        if (avgGradeStr != '?')
-          avgGrade = Number.parseFloat(avgGradeStr.replace(',', '.'));
+        if (avgGradeStr !== '?') avgGrade = Number.parseFloat(avgGradeStr.replace(',', '.'));
+        const totalEcts = Number.parseFloat(avgEctsMatch[2].replace(',', '.'));
 
-        const totalEcts = Number.parseFloat(avgEctsMatch[2]);
 
         semesters.push(<ISemester>{
           num: semNum,
@@ -163,6 +162,11 @@ export class ExcelReader {
         });
       }
     }
+
+    const totalECTS = semesters.reduce((sum, sem) => sum + Number(sem.totalECTS || 0), 0);
+    const studyDegree = AuxiliaryFunctions.getStudyDegreeByEcts(totalECTS);
+    console.log('SUMA ECTS:', totalECTS);
+    console.log('Wyliczony stopień studiów:', studyDegree);
 
     let subjectMatch;
     while (!(subjectMatch = this.rows[i].match(/Temat pracy:(.+)/))) {
@@ -197,6 +201,8 @@ export class ExcelReader {
       student: student,
       semesters: semesters,
       thesis: thesis,
+      totalECTS: totalECTS,
+      studyDegree: studyDegree,
     };
   }
 
@@ -287,5 +293,13 @@ export class ExcelReader {
 export class AuxiliaryFunctions {
   public static formatGradeToCorrectFormat(grade: number): number {
     return parseFloat(parseFloat(grade.toString().slice(0, (grade.toString().indexOf('.') + 4))).toFixed(2));
+  }
+
+  public static getStudyDegreeByEcts(ects: number): string {
+    if (ects >= 210) return 'inżynierskie';
+    if (ects >= 180) return 'licencjackie';
+    if (ects >= 120) return 'magisterskie';
+    if (ects >= 90) return 'magisterskie inżynierskie';
+    return 'nieznany';
   }
 }
