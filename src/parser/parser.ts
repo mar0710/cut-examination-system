@@ -18,7 +18,6 @@ export class ExcelReader {
   }
 
   public getProgressRecord(): IProgressRecord {
-    console.log('getProgressRecord called');
     const dateYearRow = this.rows[0];
     const dateYear = dateYearRow.match(
       /Data: (([0-2]\d|3[0-1])-(0\d|1[0-2])-(\d{4})) r\.\s+Rok Ak.: (\d{4}\/\d{2})/
@@ -165,8 +164,6 @@ export class ExcelReader {
 
     const totalECTS = semesters.reduce((sum, sem) => sum + Number(sem.totalECTS || 0), 0);
     const studyDegree = AuxiliaryFunctions.getStudyDegreeByEcts(totalECTS);
-    console.log('SUMA ECTS:', totalECTS);
-    console.log('Wyliczony stopień studiów:', studyDegree);
 
     let subjectMatch;
     while (!(subjectMatch = this.rows[i].match(/Temat pracy:(.+)/))) {
