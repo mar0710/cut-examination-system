@@ -105,6 +105,16 @@ export class UserDetailsComponent implements OnInit {
 
     const totalECTS = semesters.reduce((sum, sem) => sum + Number(sem.totalECTS || 0), 0);
 
+    const validSemesters = semesters.filter(
+      s => s.finishDate && !isNaN(new Date(s.finishDate).getTime())
+    );
+
+    const studyStartDate = student.enrollDate;
+
+    const studyEndDate = validSemesters.length > 0
+      ? validSemesters[validSemesters.length - 1].finishDate
+      : null;
+
     this.progressRecord = {
       id: tempProgressRecord.id,
       recordDate: tempProgressRecord.recordDate,
@@ -113,6 +123,8 @@ export class UserDetailsComponent implements OnInit {
       semesters: semesters,
       thesis: thesis,
       totalECTS: totalECTS,
+      studyStartDate: studyStartDate,
+      studyEndDate: studyEndDate,
     };
   }
 
@@ -140,6 +152,13 @@ export class UserDetailsComponent implements OnInit {
 
   get studyDegree(): string {
     return AuxiliaryFunctions.getStudyDegreeByEcts(this.progressRecord.totalECTS);
+  }
+
+  get isGraduatedOnTime(): boolean {
+    const start = this.progressRecord.studyStartDate ? new Date(this.progressRecord.studyStartDate) : undefined;
+    const end = this.progressRecord.studyEndDate ? new Date(this.progressRecord.studyEndDate) : undefined;
+    if (!start || !end) return false;
+    return AuxiliaryFunctions.isGraduatedOnTime(start, end, this.studyDegree);
   }
 
   handleFileUpload(xlsxFile: File) {
