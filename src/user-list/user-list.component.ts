@@ -17,8 +17,6 @@ import { Subject } from '../../app/subject.schema';
 import { Semester } from '../../app/semester.schema';
 import { ProgressRecord } from '../../app/progress-record.schema';
 import { GradesService } from '../grades.service';
-import { AuthService } from '../login/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -35,9 +33,7 @@ export class UserListComponent implements AfterViewInit {
 
   constructor(
     private userListService: UserListService,
-    private gradeService: GradesService,
-    private auth: AuthService, 
-    private router: Router
+    private gradeService: GradesService
   ) {
     this.userListService.getStudents().subscribe((results) => {
       this.dataSource = new MatTableDataSource(results);
@@ -195,10 +191,5 @@ export class UserListComponent implements AfterViewInit {
     } else {
       return false;
     }
-  }
-
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
   }
 }

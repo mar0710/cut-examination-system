@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     children: [
-      { path: 'menu', component: UserListComponent },
+      { path: 'menu', component: MenuComponent },
       { path: 'user-list', component: UserListComponent },
       { path: 'user-examination', component: UserExaminationComponent },
       { path: 'questionManager', component: QuestionManagerComponent },
