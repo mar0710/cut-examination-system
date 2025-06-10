@@ -7,6 +7,36 @@ Informatyka,1,-,Algorytmy i struktury danych,"Struktury drzewiaste, charakteryst
 Informatyka,1,-,Podstawy sieci komputerowych,"Ruting w sieciach komputerowych, metody rutingu, porównanie",
 Informatyka,1,-,Podstawy sieci komputerowych,Metody dostępu do sieci w technologii bezprzewodowej WiFi,
 Informatyka,1,-,Podstawy sieci komputerowych,Podstawowe i złożone topologie sieci komputerowych,
+Informatyka,1,-,Języki i paradygmaty programowania I ,Procesy kompilacji i interpretacji w różnych językach programowania. Omów ich przebieg porównaj wady i zalety wskaż przykłady implementacji w popularnych językach,
+Informatyka,1,-,Języki i paradygmaty programowania II ,Mechanizm przeładowanie operatorów w językach obiektowych. Podaj przykład praktycznego zastosowania,
+Informatyka,1,-,Technologie obiektowe,Mechanizm dziedziczenia. Dziedziczenie jedno i wielokrotne. Podaj przykład wykorzystania,
+Informatyka,1,-,Technologie obiektowe,Klasy abstrakcyjne i funkcje wirtualne w językach obiektowych. Podaj przykład zastosowania,
+Informatyka,1,-,Technologie obiektowe,Obsługa sytuacji wyjątkowych w językach obiektowych (np. C++ Java),
+Informatyka,1,-,Algorytmy i struktury danych,"Omówić sposoby implementacji list jednokierunkowej oraz dwukierunkowej. Podać zestaw operacji wchodzących w skład interfejsu listy",
+Informatyka,1,-,Algorytmy i struktury danych,"Omówić algorytmy efektywnego poszukiwania najkrótszej ścieżki w grafie",
+Informatyka,1,-,Języki i paradygmaty programowania I,"Procesy kompilacji i interpretacji w różnych językach programowania. Omów ich przebieg, porównaj wady i zalety, wskaż przykłady implementacji w popularnych językach",
+Informatyka,1,-,Języki i paradygmaty programowania I,"Mechanizm przeładowania operatorów w językach obiektowych. Podaj przykład praktycznego zastosowania",
+Informatyka,1,-,Języki i paradygmaty programowania I,"Mechanizm dziedziczenia. Dziedziczenie jedno i wielokrotne. Podaj przykład wykorzystania",
+Informatyka,1,-,Języki i paradygmaty programowania I,"Klasy abstrakcyjne i funkcje wirtualne w językach obiektowych. Podaj przykład zastosowania",
+Informatyka,1,-,Języki i paradygmaty programowania I,"Obsługa sytuacji wyjątkowych w językach obiektowych (np. C++, Java)",
+Informatyka,1,-,Systemy operacyjne,"Organizacja pamięci pomocniczej - metody przydziału miejsca na dysku",
+Informatyka,1,-,Systemy operacyjne,"Omów i porównaj najczęściej stosowane systemy plików",
+Informatyka,1,-,Systemy operacyjne,"Metody zarządzania wolną przestrzenią pamięci dyskowej",
+Informatyka,1,-,Systemy operacyjne,"Algorytmy planowania przydziału procesora",
+Informatyka,1,-,Systemy operacyjne,"Omów metody zarządzania pamięcią",
+Informatyka,1,-,Podstawy elektroniki i techniki cyfrowej,"Układy elektroniczne jako filtry. Klasyfikacja i przykłady zastosowań",
+Informatyka,1,-,Podstawy elektroniki i techniki cyfrowej,"Wzmacniacz operacyjny. Parametry charakterystyczne, zastosowania",
+Informatyka,1,-,Podstawy elektroniki i techniki cyfrowej,"Bramki i funktory logiczne. Tabele prawdy. Minimalizacja funkcji",
+Informatyka,1,-,Mikroprocesory i mikrokontrolery,"Budowa i zasada działania procesorów: potokowy, wektorowy, CISC, RISC",
+Informatyka,1,-,Mikroprocesory i mikrokontrolery,"Klasyfikacja architektur komputerowych",
+Informatyka,1,-,Mikroprocesory i mikrokontrolery,"Omówić podstawowe tryby adresowania",
+Informatyka,1,-,Mikroprocesory i mikrokontrolery,"Formaty i typy rozkazów procesora, wpływ długości rozkazów procesora na wielkość zajmowanej pamięci przez program oraz na jego czas wykonania",
+Informatyka,1,-,Podstawy baz danych,"Omów metody projektowania baz danych",
+Informatyka,1,-,Podstawy baz danych,"Omów relacyjny model danych",
+Informatyka,1,-,Podstawy baz danych,"Na czym polega proces normalizacji baz danych",
+Informatyka,1,-,Podstawy sieci komputerowych,"Model ISO OSI. Model TCP/IP. Krótka charakterystyka warstw modelu",
+Informatyka,1,-,Podstawy sieci komputerowych,"Adresowanie IP, podsieci i maski podsieci zmiennej długości",
+Informatyka,1,-,Podstawy sieci komputerowych,"Metody dostępu do sieci w technologii bezprzewodowej WiFi",
 Informatyka,2,Grafika komputerowa i multimedia,Zarządzanie projektem informatycznym,Omówić zasadnicze cechy mechanizmu dziedziczenia,
 Informatyka,2,Grafika komputerowa i multimedia,Programowanie równoległe i rozproszone,Środowiska programowania równoległego,
 Informatyka,2,Grafika komputerowa i multimedia,Programowanie równoległe i rozproszone,Sposoby równoważenia obciążenia procesorów w obliczeniach równoległych,
@@ -32,3 +62,16 @@ Informatyka,2,Analityka danych/Data Science,Przetwarzanie i analiza danych multi
 Informatyka,2,Analityka danych/Data Science,Zaawansowane techniki programowania,Wymienić przynajmniej 5 wzorców projektowych GoF. Wybrać i scharakteryzować 2 z nich. Jakie problemy dzięki nim są rozwiązywane?,
 Informatyka,2,Analityka danych/Data Science,Programowanie równoległe i rozproszone,Omów krótko środowisko MPI.,
 Informatyka,2,Analityka danych/Data Science,Zaawansowane technologie baz danych,Różnice pomiędzy relacyjną i nierelacyjną bazą danych. Przykłady zastosowań obu typów baz danych,
+Informatyka,2,Analityka danych/Data Science,Metody odkrywania wiedzy II, Omówić jakie wyróżnia się etapy w przetwarzaniu i analizie danych w uczeniu maszynowym i krótko je scharakteryzować.
+Informatyka,2,Analityka danych/Data Science,Metody odkrywania wiedzy II, Omówić po co się stosuje walidację krzyżową w uczeniu maszynowym oraz jakie metody walidacji wyróżniamy.
+Informatyka,2,Analityka danych/Data Science,Metody odkrywania wiedzy II, Opisać kryteria oceny wyników w uczeniu maszynowym. Proszę omówić metody oceniana skuteczności predykcji klasyfikatorów.
+Informatyka,2,Analityka danych/Data Science,Metody odkrywania wiedzy II, Opisać metody stosowane do wstępnego przetwarzania danych? Dlaczego ten etap jest ważny w uczeniu maszynowym?
+Informatyka,2,Analityka danych/Data Science,Systemy rekomendacji, Omówić algorytm k-najbliższych sąsiadów (KNN).
+Informatyka,2,Analityka danych/Data Science,Systemy rekomendacji, Opisać metodę maszyny wektorów nośnych (SVM).
+Informatyka,2,Analityka danych/Data Science,Przetwarzanie i analiza danych multimedialnych, Opisać etap normalizacji, po co się go stosuje w uczeniu maszynowym?
+Informatyka,2,Analityka danych/Data Science,Systemy rekomendacji, Omówić klasyfikator lasu losowego.
+Informatyka,2,Analityka danych/Data Science,Szeregi czasowe, giełda, ekonomia, Omówić regresję wieloraką i regresję grzbietową.
+Informatyka,2,Analityka danych/Data Science,Sieci neuronowe i deep learning, Omówić typy, metody treningu, strukturę i zasadę działania sztucznych sieci neuronowych.
+Informatyka,2,Analityka danych/Data Science,Zaawansowane metody optymalizacji, Omówić metody optymalizacji hiper-parametrów klasyfikatorów, w tym algorytmy genetyczne.
+Informatyka,2,Analityka danych/Data Science,Zaawansowane techniki programowania, Klasy i metody abstrakcyjne - podać przykłady praktycznego zastosowania.
+Informatyka,2,Analityka danych/Data Science,Zaawansowane techniki programowania, Pojęcie hermetyzacji oraz metody praktycznej realizacji w językach obiektowo zorientowanych.
