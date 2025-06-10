@@ -131,4 +131,13 @@ export class UserExaminationComponent implements OnInit {
     const xd = grade.target as HTMLTextAreaElement;
     this.gradesService.setThesisGrade(AuxiliaryFunctions.formatGradeToCorrectFormat(parseFloat(xd.value)));
   }
+
+  selectedQuestion: IQuestion | null = null;
+  selectedQuestionIndex: number | null = null;
+  selectQuestion(question: IQuestion): void {
+    const index = this.dataSource.data.findIndex(q => q.id === question.id);
+    this.selectedQuestionIndex = index;
+    this.selectedQuestion = question;
+    this.displayAnswer(question.id);
+  }
 }

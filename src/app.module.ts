@@ -22,6 +22,8 @@ import { QuestionManagerService } from './question-manager/question-manager.serv
 import { UserListService } from './user-list/user-list.service';
 import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatListModule,
+    MatDividerModule,
     MatButtonModule,
     MatIconModule,
     NgxCsvParserModule,
