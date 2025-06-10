@@ -1,0 +1,29 @@
+<div class="page">
+  <header>
+    <img class="logo" src="./assets/img/logo2.png" alt="logo" />
+    <nav></nav>
+  </header>
+  <main>
+    <div class="full_panel">
+      <div class="login-box">
+        <h2>Logowanie</h2>
+        <form (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="fill">
+            <mat-label>Hasło</mat-label>
+            <input
+              matInput
+              type="password"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">
+            Zaloguj
+          </button>
+          <div *ngIf="error" class="error">{{ error }}</div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

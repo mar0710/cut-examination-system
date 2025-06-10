@@ -1,12 +1,15 @@
 <div class="page">
   <main>
-    <div class="left_panel background">
-
-    </div>
+    <div class="left_panel background"></div>
     <div class="right_panel">
-      <img class="logo" src="./assets/img/logo.png" alt="error">
+      <img class="logo" src="./assets/img/logo.png" alt="logo" />
+      <nav>
         <a routerLink="/questionManager" class="right_menu_button">Menadżer Pytań</a>
         <a routerLink="/userList" class="right_menu_button">Lista Użytkowników</a>
+        <button mat-flat-button color="warn" class="right_menu_button" (click)="logout()">
+          Wyloguj
+        </button>
+      </nav>
     </div>
   </main>
 </div>

@@ -1,0 +1,60 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--bg-color, #F4F6F8);
+}
+
+header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background: var(--theme-color);
+
+  img.logo {
+    height: 40px;
+  }
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full_panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: #fff;
+  padding: 2em;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  h2 {
+    margin: 0;
+    text-align: center;
+    color: var(--theme-color);
+  }
+
+  .error {
+    color: #f44336;
+    text-align: center;
+  }
+
+  button {
+    align-self: stretch;
+  }
+}

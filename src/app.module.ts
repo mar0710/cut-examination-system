@@ -22,6 +22,9 @@ import { QuestionManagerService } from './question-manager/question-manager.serv
 import { UserListService } from './user-list/user-list.service';
 import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './login/auth.guard';
+import { AuthService } from './login/auth.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { FormsModule } from '@angular/forms';
     UserDetailsComponent,
     UserExaminationComponent,
     UserSummaryComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +56,8 @@ import { FormsModule } from '@angular/forms';
     QuestionManagerService,
     UserListService,
     GradesService,
+    AuthService,
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })
