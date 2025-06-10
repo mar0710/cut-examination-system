@@ -37,10 +37,11 @@
               name="field"
               required
               [(ngModel)]="newQuestion.field"
+              (ngModelChange)="filterFields($event)"
               [matAutocomplete]="autoField"
             />
             <mat-autocomplete #autoField="matAutocomplete">
-              <mat-option *ngFor="let opt of existingFields" [value]="opt">
+              <mat-option *ngFor="let opt of filteredFields" [value]="opt">
                 {{ opt }}
               </mat-option>
             </mat-autocomplete>
@@ -60,10 +61,11 @@
               name="specialization"
               required
               [(ngModel)]="newQuestion.specialization"
+              (ngModelChange)="filterSpecializations($event)"
               [matAutocomplete]="autoSpec"
             />
             <mat-autocomplete #autoSpec="matAutocomplete">
-              <mat-option *ngFor="let opt of existingSpecializations" [value]="opt">
+              <mat-option *ngFor="let opt of filteredSpecializations" [value]="opt">
                 {{ opt }}
               </mat-option>
             </mat-autocomplete>
@@ -75,10 +77,11 @@
               name="subject"
               required
               [(ngModel)]="newQuestion.subject"
+              (ngModelChange)="filterSubjects($event)"
               [matAutocomplete]="autoSubj"
             />
             <mat-autocomplete #autoSubj="matAutocomplete">
-              <mat-option *ngFor="let opt of existingSubjects" [value]="opt">
+              <mat-option *ngFor="let opt of filteredSubjects" [value]="opt">
                 {{ opt }}
               </mat-option>
             </mat-autocomplete>

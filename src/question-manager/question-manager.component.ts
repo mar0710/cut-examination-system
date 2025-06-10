@@ -38,6 +38,10 @@ export class QuestionManagerComponent implements AfterViewInit, OnInit {
   existingSpecializations: string[] = [];
   existingSubjects: string[] = [];
 
+  filteredFields: string[] = [];
+  filteredSpecializations: string[] = [];
+  filteredSubjects: string[] = [];
+
   constructor(
     private questionManagerService: QuestionManagerService,
     private ngxCsvParser: NgxCsvParser
@@ -148,6 +152,25 @@ export class QuestionManagerComponent implements AfterViewInit, OnInit {
     this.existingFields = Array.from(new Set(qs.map(q => q.field))).sort();
     this.existingSpecializations = Array.from(new Set(qs.map(q => q.specialization))).sort();
     this.existingSubjects = Array.from(new Set(qs.map(q => q.subject))).sort();
+
+    this.filteredFields = [...this.existingFields];
+    this.filteredSpecializations = [...this.existingSpecializations];
+    this.filteredSubjects = [...this.existingSubjects];
+  }
+
+  filterFields(value: string) {
+    const v = value?.toLowerCase() || '';
+    this.filteredFields = this.existingFields.filter(opt => opt.toLowerCase().startsWith(v));
+  }
+
+  filterSpecializations(value: string) {
+    const v = value?.toLowerCase() || '';
+    this.filteredSpecializations = this.existingSpecializations.filter(opt => opt.toLowerCase().startsWith(v));
+  }
+
+  filterSubjects(value: string) {
+    const v = value?.toLowerCase() || '';
+    this.filteredSubjects = this.existingSubjects.filter(opt => opt.toLowerCase().startsWith(v));
   }
 
   loadQuestions() {
