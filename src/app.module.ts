@@ -27,6 +27,8 @@ import { AuthGuard } from './login/auth.guard';
 import { AuthService } from './login/auth.service';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     NgxCsvParserModule,
     FormsModule,
+    MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     ElectronService,
