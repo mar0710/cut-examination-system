@@ -25,6 +25,7 @@
             <p><span class="label">Rok:</span> {{ progressRecord.academicYear }}</p>
             <p><span class="label">Temat pracy:</span> {{ progressRecord.thesis.subject }}</p>
             <p><span class="label">Stopień studiów:</span> {{ studyDegree }}</p>
+            <p><span class="label">Suma ECTS:</span> {{ progressRecord.totalECTS }}</p>
           </div>
         </div>
 
@@ -39,6 +40,9 @@
 
       </div>
 
+    </div>
+    <div *ngIf="!ectsValidation.valid" class="ects-warning">
+      Uwaga: liczba punktów ECTS jest niewystarczająca ({{ ectsValidation.actual }}/{{ ectsValidation.required }})
     </div>
   </main>
 </div>

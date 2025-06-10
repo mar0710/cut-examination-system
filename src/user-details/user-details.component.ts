@@ -154,4 +154,31 @@ export class UserDetailsComponent implements OnInit {
     fileReader.readAsArrayBuffer(xlsxFile);
   }
 
+  get ectsValidation(): { valid: boolean; required: number; actual: number } {
+    const degree = this.studyDegree;
+    let requiredEcts = 0;
+    switch (degree) {
+      case 'inżynierskie':
+        requiredEcts = 210;
+        break;
+      case 'licencjackie':
+        requiredEcts = 180;
+        break;
+      case 'magisterskie inżynierskie':
+        requiredEcts = 90;
+        break;
+      case 'magisterskie':
+        requiredEcts = 120;
+        break;
+      default:
+        requiredEcts = 0;
+    }
+    const actualEcts = this.progressRecord?.totalECTS || 0;
+    return {
+      valid: actualEcts >= requiredEcts,
+      required: requiredEcts,
+      actual: actualEcts,
+    };
+  }
+
 }
