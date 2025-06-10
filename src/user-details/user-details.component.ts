@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Index } from 'typeorm';
 import { ProgressRecord } from '../../app/progress-record.schema';
 import { Semester } from '../../app/semester.schema';
 import { Student } from '../../app/student.schema';
 import { Thesis } from '../../app/thesis.schema';
 import { GradesService } from '../grades.service';
 import { IProgressRecord, ISemester, ISubject } from '../parser/models';
-import { AuxiliaryFunctions } from '../parser/parser';
+import { AuxiliaryFunctions, ExcelReader } from '../parser/parser';
 import { QuestionManagerService } from '../question-manager/question-manager.service';
 import { UserListService } from '../user-list/user-list.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-user-details',
@@ -103,6 +103,8 @@ export class UserDetailsComponent implements OnInit {
       subjects = [];
     }
 
+    const totalECTS = semesters.reduce((sum, sem) => sum + Number(sem.totalECTS || 0), 0);
+
     this.progressRecord = {
       id: tempProgressRecord.id,
       recordDate: tempProgressRecord.recordDate,
@@ -110,6 +112,7 @@ export class UserDetailsComponent implements OnInit {
       student: student,
       semesters: semesters,
       thesis: thesis,
+      totalECTS: totalECTS,
     };
   }
 
@@ -123,7 +126,6 @@ export class UserDetailsComponent implements OnInit {
     return AuxiliaryFunctions.formatGradeToCorrectFormat(avgGrade / this.progressRecord.semesters.length);
   }
 
-
   areQuestionsExist() {
     let numberOfQuestions;
     this.questionManagerService.getQuestions().subscribe((results)=>{
@@ -136,5 +138,47 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
+  get studyDegree(): string {
+    return AuxiliaryFunctions.getStudyDegreeByEcts(this.progressRecord.totalECTS);
+  }
+
+  handleFileUpload(xlsxFile: File) {
+    const fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const reader = new ExcelReader(workbook);
+      const progressRecord = reader.getProgressRecord();
+      this.progressRecord = progressRecord;
+    };
+    fileReader.readAsArrayBuffer(xlsxFile);
+  }
+
+  get ectsValidation(): { valid: boolean; required: number; actual: number } {
+    const degree = this.studyDegree;
+    let requiredEcts = 0;
+    switch (degree) {
+      case 'inżynierskie':
+        requiredEcts = 210;
+        break;
+      case 'licencjackie':
+        requiredEcts = 180;
+        break;
+      case 'magisterskie inżynierskie':
+        requiredEcts = 90;
+        break;
+      case 'magisterskie':
+        requiredEcts = 120;
+        break;
+      default:
+        requiredEcts = 0;
+    }
+    const actualEcts = this.progressRecord?.totalECTS || 0;
+    return {
+      valid: actualEcts >= requiredEcts,
+      required: requiredEcts,
+      actual: actualEcts,
+    };
+  }
 
 }

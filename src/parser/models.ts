@@ -41,4 +41,6 @@ export interface IProgressRecord {
   student: Student;
   semesters: ISemester[];
   thesis: Thesis;
+  totalECTS?: number;
+  studyDegree?: string;
 }
