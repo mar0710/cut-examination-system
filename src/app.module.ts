@@ -22,6 +22,9 @@ import { QuestionManagerService } from './question-manager/question-manager.serv
 import { UserListService } from './user-list/user-list.service';
 import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './login/auth.guard';
+import { AuthService } from './login/auth.service';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 
@@ -34,6 +37,7 @@ import { MatDividerModule } from '@angular/material/divider';
     UserDetailsComponent,
     UserExaminationComponent,
     UserSummaryComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,8 @@ import { MatDividerModule } from '@angular/material/divider';
     QuestionManagerService,
     UserListService,
     GradesService,
+    AuthService,
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })
