@@ -7,7 +7,6 @@
 
       <label class="mat-flat-button">
         Wgraj z pliku
-
         <input
           #uploads
           type="file"
@@ -18,12 +17,104 @@
           value="process"
         />
       </label>
+      <button mat-flat-button color="primary" (click)="toggleAddForm()">
+        Dodaj pytanie
+      </button>
 
     </nav>
   </header>
 
   <main>
     <div class="full_panel">
+
+      <!-- formularz dodawania pytania-->
+      <div *ngIf="showAddForm" class="add-form">
+        <form (ngSubmit)="addQuestion()" #questionForm="ngForm">
+          <mat-form-field>
+            <mat-label>Kierunek</mat-label>
+            <input
+              matInput
+              name="field"
+              required
+              [(ngModel)]="newQuestion.field"
+              [matAutocomplete]="autoField"
+            />
+            <mat-autocomplete #autoField="matAutocomplete">
+              <mat-option *ngFor="let opt of existingFields" [value]="opt">
+                {{ opt }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Stopień</mat-label>
+            <mat-select name="degree" required [(ngModel)]="newQuestion.degree">
+              <mat-option [value]="1">1</mat-option>
+              <mat-option [value]="2">2</mat-option>
+              <mat-option [value]="3">3</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Specjalność</mat-label>
+            <input
+              matInput
+              name="specialization"
+              required
+              [(ngModel)]="newQuestion.specialization"
+              [matAutocomplete]="autoSpec"
+            />
+            <mat-autocomplete #autoSpec="matAutocomplete">
+              <mat-option *ngFor="let opt of existingSpecializations" [value]="opt">
+                {{ opt }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Przedmiot</mat-label>
+            <input
+              matInput
+              name="subject"
+              required
+              [(ngModel)]="newQuestion.subject"
+              [matAutocomplete]="autoSubj"
+            />
+            <mat-autocomplete #autoSubj="matAutocomplete">
+              <mat-option *ngFor="let opt of existingSubjects" [value]="opt">
+                {{ opt }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Pytanie</mat-label>
+            <textarea
+              matInput
+              name="question"
+              required
+              [(ngModel)]="newQuestion.question"
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Odpowiedź</mat-label>
+            <textarea
+              matInput
+              name="answer"
+              [(ngModel)]="newQuestion.answer"
+            ></textarea>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="questionForm.invalid"
+          >
+            Zapisz
+          </button>
+          <button mat-button type="button" (click)="toggleAddForm()">
+            Anuluj
+          </button>
+        </form>
+      </div>
+
       <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Np.: Podstawy sieci komputerowych" #input/>

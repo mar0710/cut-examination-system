@@ -22,6 +22,8 @@ import { QuestionManagerService } from './question-manager/question-manager.serv
 import { UserListService } from './user-list/user-list.service';
 import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     NgxCsvParserModule,
     FormsModule,
+    MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     ElectronService,

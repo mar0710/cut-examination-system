@@ -419,3 +419,39 @@ button {
   background-color: #f44336;
   color:white;
 }
+
+.add-form {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  z-index: 10;
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-form-field:nth-child(n+5) {
+      grid-column: span 2;
+    }
+
+    .actions {
+      grid-column: span 2;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  }
+}

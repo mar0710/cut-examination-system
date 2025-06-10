@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { QuestionManagerService } from './question-manager.service';
   templateUrl: './question-manager.component.html',
   styleUrls: ['./question-manager.component.scss'],
 })
-export class QuestionManagerComponent implements AfterViewInit {
+export class QuestionManagerComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [
     'id',
     'subject',
@@ -23,6 +23,21 @@ export class QuestionManagerComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('uploads') fileValue: ElementRef;
 
+  showAddForm = false;
+  newQuestion: IQuestion = {
+    id: 0,
+    field: '',
+    degree: null,
+    specialization: '',
+    subject: '',
+    question: '',
+    answer: '',
+  };
+
+  existingFields: string[] = [];
+  existingSpecializations: string[] = [];
+  existingSubjects: string[] = [];
+
   constructor(
     private questionManagerService: QuestionManagerService,
     private ngxCsvParser: NgxCsvParser
@@ -30,6 +45,10 @@ export class QuestionManagerComponent implements AfterViewInit {
     this.questionManagerService.getQuestions().subscribe((results) => {
       this.dataSource = new MatTableDataSource(results);
     });
+  }
+
+  ngOnInit() {
+    this.loadQuestions();
   }
 
   ngAfterViewInit() {
@@ -96,5 +115,45 @@ export class QuestionManagerComponent implements AfterViewInit {
           console.log('Error', error);
         },
       });
+  }
+
+  toggleAddForm() {
+    this.showAddForm = !this.showAddForm;
+    if (this.showAddForm) {
+      const maxId = this.dataSource?.data?.length
+        ? Math.max(...this.dataSource.data.map(q => q.id))
+        : 0;
+      this.newQuestion = {
+        id: maxId + 1,
+        field: '',
+        degree: null,
+        specialization: '',
+        subject: '',
+        question: '',
+        answer: '',
+      };
+    }
+  }
+
+  addQuestion() {
+    this.questionManagerService
+      .addQuestions([this.newQuestion])
+      .subscribe(() => {
+        this.loadQuestions();
+        this.toggleAddForm();
+      });
+  }
+
+  private populatePickers(qs: IQuestion[]) {
+    this.existingFields = Array.from(new Set(qs.map(q => q.field))).sort();
+    this.existingSpecializations = Array.from(new Set(qs.map(q => q.specialization))).sort();
+    this.existingSubjects = Array.from(new Set(qs.map(q => q.subject))).sort();
+  }
+
+  loadQuestions() {
+    this.questionManagerService.getQuestions().subscribe(qs => {
+      this.dataSource.data = qs;
+      this.populatePickers(qs);
+    });
   }
 }
