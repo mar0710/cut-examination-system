@@ -39,6 +39,7 @@
               <span class="label">Data zakończenia studiów:</span>
               {{ progressRecord.studyEndDate | date: "d.MM.y" }}
             </p>
+            <p><span class="label">Suma ECTS:</span> {{ progressRecord.totalECTS }}</p>
           </div>
         </div>
 
@@ -52,6 +53,9 @@
 
       </div>
 
+    </div>
+    <div *ngIf="!ectsValidation.valid" class="ects-warning">
+      Uwaga: liczba punktów ECTS jest niewystarczająca ({{ ectsValidation.actual }}/{{ ectsValidation.required }})
     </div>
   </main>
 </div>
