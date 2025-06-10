@@ -25,6 +25,8 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './login/auth.guard';
 import { AuthService } from './login/auth.service';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { AuthService } from './login/auth.service';
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatListModule,
+    MatDividerModule,
     MatButtonModule,
     MatIconModule,
     NgxCsvParserModule,

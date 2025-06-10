@@ -122,13 +122,22 @@ export class UserExaminationComponent implements OnInit {
   }
 
   updateDiplomaGrade(): void {
-    const xd = ((this.answerGrade[0] + this.answerGrade[1] + this.answerGrade[2]) / 3 + this.diplomaGrade) / 2
-    console.log("ocena diploma:", xd)
-    this.gradesService.setDiplomaGrade(AuxiliaryFunctions.formatGradeToCorrectFormat(xd));
+    const grades = [this.diplomaGrade, ...this.answerGrade];
+    const avg = grades.reduce((a, b) => a + b, 0) / grades.length;
+    this.gradesService.setDiplomaGrade(AuxiliaryFunctions.formatGradeToCorrectFormat(avg));
   }
 
   updateThesisGrade(grade: Event): void {
     const xd = grade.target as HTMLTextAreaElement;
     this.gradesService.setThesisGrade(AuxiliaryFunctions.formatGradeToCorrectFormat(parseFloat(xd.value)));
+  }
+
+  selectedQuestion: IQuestion | null = null;
+  selectedQuestionIndex: number | null = null;
+  selectQuestion(question: IQuestion): void {
+    const index = this.dataSource.data.findIndex(q => q.id === question.id);
+    this.selectedQuestionIndex = index;
+    this.selectedQuestion = question;
+    this.displayAnswer(question.id);
   }
 }
