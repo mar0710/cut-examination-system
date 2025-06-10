@@ -17,6 +17,15 @@ import { Subject } from '../../app/subject.schema';
 import { Semester } from '../../app/semester.schema';
 import { ProgressRecord } from '../../app/progress-record.schema';
 import { GradesService } from '../grades.service';
+import { EMPTY, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+interface PersonEntry {
+  name: string;
+  surname: string;
+  albumNum: string;
+  progressRecord: IProgressRecord;
+}
 
 @Component({
   selector: 'app-user-list',
@@ -31,11 +40,30 @@ export class UserListComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('uploads') fileValue: ElementRef;
 
+  people: PersonEntry[] = [];
+  displayedPeople: PersonEntry[] = [];
+  selectedPerson: PersonEntry | null = null;
+
   constructor(
     private userListService: UserListService,
     private gradeService: GradesService
   ) {
     this.userListService.getStudents().subscribe((results) => {
+      results.sort((a, b) => {
+        const aParts = a.name.trim().split(/\s+/);
+        const bParts = b.name.trim().split(/\s+/);
+
+        const aNazwisko = aParts[0].toUpperCase();
+        const bNazwisko = bParts[0].toUpperCase();
+
+        const aImie = aParts.slice(1).join(' ').toUpperCase();
+        const bImie = bParts.slice(1).join(' ').toUpperCase();
+
+        if (aNazwisko === bNazwisko) {
+          return aImie.localeCompare(bImie);
+        }
+        return aNazwisko.localeCompare(bNazwisko);
+      });
       this.dataSource = new MatTableDataSource(results);
     });
     this.gradeService.selectedexaminatedStudents$.subscribe((students) => {
@@ -78,6 +106,21 @@ export class UserListComponent implements AfterViewInit {
 
         this.saveProgressRecordToDatabase(readser.getProgressRecord());
         this.userListService.getStudents().subscribe((results) => {
+          results.sort((a, b) => {
+            const aParts = a.name.trim().split(/\s+/);
+            const bParts = b.name.trim().split(/\s+/);
+
+            const aNazwisko = aParts[0].toUpperCase();
+            const bNazwisko = bParts[0].toUpperCase();
+
+            const aImie = aParts.slice(1).join(' ').toUpperCase();
+            const bImie = bParts.slice(1).join(' ').toUpperCase();
+
+            if (aNazwisko === bNazwisko) {
+              return aImie.localeCompare(bImie);
+            }
+            return aNazwisko.localeCompare(bNazwisko);
+          });
           this.dataSource.data = results;
         });
       };
@@ -136,7 +179,6 @@ export class UserListComponent implements AfterViewInit {
       console.log('student with album number: ' + progressRecord.student.albumNum + ' already exists')
     }
 
-
   }
 
   subjectToSubjectSchema(subject: ISubject): Subject {
@@ -191,5 +233,108 @@ export class UserListComponent implements AfterViewInit {
     } else {
       return false;
     }
+  }
+
+  handleFilesUpload(files: FileList) {
+    const filePromises: Promise<PersonEntry>[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      filePromises.push(this.readProgressRecordFromFile(file));
+    }
+    Promise.all(filePromises).then((entries) => {
+      const validEntries = entries.filter(Boolean);
+      const saveObservables = validEntries.map(entry =>
+        this.saveProgressRecordToDatabase$(entry.progressRecord)
+      );
+      forkJoin(saveObservables).subscribe(() => {
+        this.userListService.getStudents().subscribe((results) => {
+          results.sort((a, b) => {
+            const aParts = a.name.trim().split(/\s+/);
+            const bParts = b.name.trim().split(/\s+/);
+
+            const aNazwisko = aParts[0].toUpperCase();
+            const bNazwisko = bParts[0].toUpperCase();
+
+            const aImie = aParts.slice(1).join(' ').toUpperCase();
+            const bImie = bParts.slice(1).join(' ').toUpperCase();
+
+            if (aNazwisko === bNazwisko) {
+              return aImie.localeCompare(bImie);
+            }
+            return aNazwisko.localeCompare(bNazwisko);
+          });
+          this.dataSource.data = results;
+        });
+      });
+    });
+  }
+
+  readProgressRecordFromFile(file: File): Promise<PersonEntry> {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const excelReader = new ExcelReader(workbook);
+          const progressRecord = excelReader.getProgressRecord();
+          const [name, surname] = progressRecord.student.name.split(' ');
+          resolve({
+            name: name,
+            surname: surname,
+            albumNum: String(progressRecord.student.albumNum),
+            progressRecord: progressRecord,
+          });
+        } catch (err) {
+          resolve(null);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  selectPerson(person: PersonEntry) {
+    this.selectedPerson = person;
+  }
+
+  saveProgressRecordToDatabase$(progressRecord: IProgressRecord) {
+    return this.userListService.getStudent(progressRecord.student.albumNum).pipe(
+      switchMap((controlUser) => {
+        if (controlUser && Object.keys(controlUser).length > 0) {
+          console.log('student with album number: ' + progressRecord.student.albumNum + ' already exists');
+          return EMPTY;
+        }
+        return this.userListService.addStudent(progressRecord.student).pipe(
+          switchMap((studentId) =>
+            this.userListService.addThesis(progressRecord.thesis).pipe(
+              switchMap((thesisId) => {
+                const semesterObservables = progressRecord.semesters.map((semester) => {
+                  const subjectObservables = semester.subjects.map((subject) =>
+                    this.userListService.addSubject(this.subjectToSubjectSchema(subject))
+                  );
+                  return forkJoin(subjectObservables).pipe(
+                    switchMap((subjectIds) =>
+                      this.userListService.addSemester(this.semesterToSemesterSchema(semester, subjectIds))
+                    )
+                  );
+                });
+                return forkJoin(semesterObservables).pipe(
+                  switchMap((semesterIds) =>
+                    this.userListService.addProgressRecord(
+                      this.progressRecordToProgressRecordSchema(
+                        progressRecord,
+                        studentId,
+                        semesterIds,
+                        thesisId
+                      )
+                    )
+                  )
+                );
+              })
+            )
+          )
+        );
+      })
+    );
   }
 }
