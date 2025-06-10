@@ -22,6 +22,11 @@ import { QuestionManagerService } from './question-manager/question-manager.serv
 import { UserListService } from './user-list/user-list.service';
 import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './login/auth.guard';
+import { AuthService } from './login/auth.service';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
@@ -34,6 +39,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     UserDetailsComponent,
     UserExaminationComponent,
     UserSummaryComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +50,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatListModule,
+    MatDividerModule,
     MatButtonModule,
     MatIconModule,
     NgxCsvParserModule,
@@ -56,6 +64,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     QuestionManagerService,
     UserListService,
     GradesService,
+    AuthService,
+    AuthGuard,
   ],
   bootstrap: [AppComponent],
 })
