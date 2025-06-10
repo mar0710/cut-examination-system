@@ -25,10 +25,23 @@
             <p><span class="label">Rok:</span> {{ progressRecord.academicYear }}</p>
             <p><span class="label">Temat pracy:</span> {{ progressRecord.thesis.subject }}</p>
             <p><span class="label">Stopień studiów:</span> {{ studyDegree }}</p>
+            <p>
+              <span class="label">Ukończenie w terminie:</span>
+              <span [ngClass]="{'ok': isGraduatedOnTime, 'late': !isGraduatedOnTime}">
+                {{ isGraduatedOnTime ? 'TAK' : 'NIE' }}
+              </span>
+            </p>
+            <p>
+              <span class="label">Data rozpoczęcia studiów:</span>
+              {{ progressRecord.studyStartDate | date: "d.MM.y" }}
+            </p>
+            <p>
+              <span class="label">Data zakończenia studiów:</span>
+              {{ progressRecord.studyEndDate | date: "d.MM.y" }}
+            </p>
             <p><span class="label">Suma ECTS:</span> {{ progressRecord.totalECTS }}</p>
           </div>
         </div>
-
 
         <div class="row diploma">
           <a class="diploma-process-button" mat-button [disabled]="!areQuestionsExist()"
@@ -46,13 +59,3 @@
     </div>
   </main>
 </div>
-
-
-
-
-
-
-
-
-
-
