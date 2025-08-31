@@ -9,6 +9,7 @@ import { Thesis } from './thesis.schema';
 import { Subject } from './subject.schema';
 import { Semester } from './semester.schema';
 import { ProgressRecord } from './progress-record.schema';
+import {IQuestion} from "../src/parser/models";
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
@@ -88,12 +89,46 @@ async function createWindow(): Promise<BrowserWindow> {
     }
   });
 
+
+  let cachedQuestions: IQuestion[] = [];
+
+  ipcMain.on('open-questions-window', async (event, questions) => {
+    cachedQuestions = questions; // Store for later use
+
+    const electronScreen = screen;
+    const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+    const questionWin = new BrowserWindow({
+      x: 50,
+      y: 50,
+      width: Math.floor(size.width * 0.6),
+      height: Math.floor(size.height * 0.8),
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      },
+    });
+
+    await questionWin.loadFile(path.join(__dirname, '../dist/index.html'), {
+      hash: '/questions'
+    });
+
+    // Wait for the renderer to request the data
+    ipcMain.on('request-questions-data', (event) => {
+      event.sender.send('questions-data', cachedQuestions);
+    });
+
+    questionWin.on('closed', () => {
+      // Optional cleanup
+    });
+  });
+
   ipcMain.on('get-question', async (event: any, _id: number) => {
     try {
-        const temp = await questionRepo.findOneBy({id: _id});
-        const question = await questionRepo.create(temp);
-        event.returnValue = question
-      }
+      const temp = await questionRepo.findOneBy({id: _id});
+      const question = await questionRepo.create(temp);
+      event.returnValue = question
+    }
     catch (err) {
       throw err;
     }
@@ -135,10 +170,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('add-student', async (event: any, _student: Student) => {
     try {
-        const student = await studentRepo.create(_student);
-        await studentRepo.save(student);
-        event.returnValue = student.id
-      }
+      const student = await studentRepo.create(_student);
+      await studentRepo.save(student);
+      event.returnValue = student.id
+    }
     catch (err) {
       throw err;
     }
@@ -157,10 +192,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('get-student', async (event: any, _albumNum: number) => {
     try {
-        const temp = await studentRepo.findOneBy({albumNum: _albumNum});
-        const student = await studentRepo.create(temp);
-        event.returnValue = student
-      }
+      const temp = await studentRepo.findOneBy({albumNum: _albumNum});
+      const student = await studentRepo.create(temp);
+      event.returnValue = student
+    }
     catch (err) {
       throw err;
     }
@@ -179,10 +214,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('add-thesis', async (event: any, _thesis: Thesis) => {
     try {
-        const thesis = await thesisRepo.create(_thesis);
-        await thesisRepo.save(thesis);
-        event.returnValue = thesis.id
-      }
+      const thesis = await thesisRepo.create(_thesis);
+      await thesisRepo.save(thesis);
+      event.returnValue = thesis.id
+    }
     catch (err) {
       throw err;
     }
@@ -191,10 +226,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('get-thesis', async (event: any, _id: number) => {
     try {
-        const temp = await thesisRepo.findOneBy({id: _id});
-        const thesis = await thesisRepo.create(temp);
-        event.returnValue = thesis
-      }
+      const temp = await thesisRepo.findOneBy({id: _id});
+      const thesis = await thesisRepo.create(temp);
+      event.returnValue = thesis
+    }
     catch (err) {
       throw err;
     }
@@ -214,10 +249,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('add-subject', async (event: any, _subject: Subject) => {
     try {
-        const subject = await subjectRepo.create(_subject);
-        await subjectRepo.save(subject);
-        event.returnValue = subject.id
-      }
+      const subject = await subjectRepo.create(_subject);
+      await subjectRepo.save(subject);
+      event.returnValue = subject.id
+    }
     catch (err) {
       throw err;
     }
@@ -227,10 +262,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('get-subject', async (event: any, _id: number) => {
     try {
-        const temp = await subjectRepo.findOneBy({id: _id});
-        const subject = await subjectRepo.create(temp);
-        event.returnValue = subject
-      }
+      const temp = await subjectRepo.findOneBy({id: _id});
+      const subject = await subjectRepo.create(temp);
+      event.returnValue = subject
+    }
     catch (err) {
       throw err;
     }
@@ -251,10 +286,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('add-semester', async (event: any, _semester: Semester) => {
     try {
-        const semester = await semesterRepo.create(_semester);
-        await semesterRepo.save(semester);
-        event.returnValue = semester.id
-      }
+      const semester = await semesterRepo.create(_semester);
+      await semesterRepo.save(semester);
+      event.returnValue = semester.id
+    }
     catch (err) {
       throw err;
     }
@@ -263,10 +298,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('get-semester', async (event: any, _id: number) => {
     try {
-        const temp = await semesterRepo.findOneBy({id: _id});
-        const semester = await semesterRepo.create(temp);
-        event.returnValue = semester
-      }
+      const temp = await semesterRepo.findOneBy({id: _id});
+      const semester = await semesterRepo.create(temp);
+      event.returnValue = semester
+    }
     catch (err) {
       throw err;
     }
@@ -284,10 +319,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('add-progressRecord', async (event: any, _progressRecord: ProgressRecord) => {
     try {
-        const progressRecord = await progressRecordRepo.create(_progressRecord);
-        await progressRecordRepo.save(progressRecord);
-        event.returnValue = progressRecord.id
-      }
+      const progressRecord = await progressRecordRepo.create(_progressRecord);
+      await progressRecordRepo.save(progressRecord);
+      event.returnValue = progressRecord.id
+    }
     catch (err) {
       throw err;
     }
@@ -297,10 +332,10 @@ async function createWindow(): Promise<BrowserWindow> {
 
   ipcMain.on('get-progressRecord', async (event: any, _studentId: number) => {
     try {
-        const temp = await progressRecordRepo.findOneBy({student: _studentId});
-        const progressRecord = await progressRecordRepo.create(temp);
-        event.returnValue = progressRecord
-      }
+      const temp = await progressRecordRepo.findOneBy({student: _studentId});
+      const progressRecord = await progressRecordRepo.create(temp);
+      event.returnValue = progressRecord
+    }
     catch (err) {
       throw err;
     }

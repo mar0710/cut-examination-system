@@ -7,12 +7,14 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserExaminationComponent } from './user-examination/user-examination.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserSummaryComponent } from './user-summary/user-summary.component';
+import {QuestionsWindowComponent} from "./user-examination/questions-window.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/menu', pathMatch: 'full' },
   { path: 'questionManager', component: QuestionManagerComponent },
   { path: 'userDetails/:id', component: UserDetailsComponent },
   { path: 'userExamination/:id', component: UserExaminationComponent },
+  { path: 'questions', component: QuestionsWindowComponent },
   { path: 'userList', component: UserListComponent },
   { path: 'userSummary/:id', component: UserSummaryComponent },
   { path: 'menu', component: MenuComponent },

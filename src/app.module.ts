@@ -24,6 +24,7 @@ import { GradesService } from './grades.service';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import {QuestionsWindowComponent} from "./user-examination/questions-window.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatDividerModule } from '@angular/material/divider';
     UserListComponent,
     UserDetailsComponent,
     UserExaminationComponent,
+    QuestionsWindowComponent,
     UserSummaryComponent,
   ],
   imports: [

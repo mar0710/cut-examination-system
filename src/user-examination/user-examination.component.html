@@ -10,25 +10,6 @@
     <div class="full_panel diploma">
 
       <div class="diploma-box">
-        <!--        <div class="questions">-->
-        <!--          <div *ngFor="let question of dataSource.data; let i = index" class=" row">-->
-        <!--            <div class="column question" style="width: 100%">-->
-        <!--              <div (click)="displayAnswer(question.id)">{{ question.question }}</div>-->
-        <!--            </div>-->
-        <!--            <div class="column" style="width: 96px">-->
-        <!--              <input-->
-        <!--                required-->
-        <!--                [min]="2"-->
-        <!--                [max]="5"-->
-        <!--                [step]="0.5"-->
-        <!--                type="number"-->
-        <!--                [(ngModel)]="answerGrade[i]"-->
-        <!--                (input)="updateDiplomaGrade()"-->
-        <!--              />-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
-
 
         <div class="mat-elevation-z2 exam-layout">
           <!-- Left Panel: List of Questions -->
@@ -45,6 +26,7 @@
               <mat-divider></mat-divider>
             </ng-container>
           </mat-nav-list>
+
 
           <div class="question-details" *ngIf="selectedQuestion">
             <h2>{{ selectedQuestion.question }}</h2>

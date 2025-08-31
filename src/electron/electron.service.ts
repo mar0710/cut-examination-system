@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { ipcRenderer, webFrame } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import {IQuestion} from "../parser/models";
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +42,10 @@ export class ElectronService {
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
   }
+  openQuestionsWindow(questions: IQuestion[]) {
+    if (!this.isElectron) return;
+
+    this.ipcRenderer.send('open-questions-window', questions);
+  }
+
 }

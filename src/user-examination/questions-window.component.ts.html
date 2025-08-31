@@ -1,0 +1,22 @@
+<div class="questions-window-container">
+  <h1>Drawn Questions</h1>
+
+  <div *ngIf="questions.length === 0">
+    <p>No questions available.</p>
+  </div>
+
+  <mat-accordion *ngIf="questions.length > 0">
+    <mat-expansion-panel *ngFor="let question of questions; let i = index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Question {{ i + 1 }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="question-text">
+        <p>{{ question.question }}</p>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
